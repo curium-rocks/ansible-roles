@@ -38,15 +38,25 @@
     name: acl
     state: present
   become: true
-- name: Install nvm
-  shell: >
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+- name: Download NVM Installer
+  get_url:
+    url: https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh
+    dest: /tmp/install-nvm.sh
+    mode: 0700
+    checksum: sha256:b674516f001d331c517be63c1baeaf71de6cbb6d68a44112bf2cff39a6bc246a
   args:
     creates: "/home/{{ service_account }}/.nvm/nvm.sh"
   become: true
   become_method: sudo
   become_user: '{{ service_account }}'
-- name: Install node
+- name: Install NVM
+  shell: /tmp/install-nvm.sh
+  args:
+    creates: "/home/{{ service_account }}/.nvm/nvm.sh"
+  become: true
+  become_method: sudo
+  become_user: '{{ service_account }}'
+- name: Install Node.JS
   shell: '. /home/{{ service_account }}/.nvm/nvm.sh && nvm install {{ node_version }}'
   args:
     creates: "/home/{{ service_account }}/.nvm/versions/node"
