@@ -38,17 +38,20 @@
     name: acl
     state: present
   become: true
+- name: Check if NVM is installed
+  stat: 
+    path: "/home/{{ service_account }}/.nvm/nvm.sh"
+  register: nvm
 - name: Download NVM Installer
   get_url:
     url: https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh
     dest: /tmp/install-nvm.sh
     mode: 0700
     checksum: sha256:b674516f001d331c517be63c1baeaf71de6cbb6d68a44112bf2cff39a6bc246a
-  args:
-    creates: "/home/{{ service_account }}/.nvm/nvm.sh"
   become: true
   become_method: sudo
   become_user: '{{ service_account }}'
+  when: nvm.stat.exists == false
 - name: Install NVM
   command: /tmp/install-nvm.sh
   args:
