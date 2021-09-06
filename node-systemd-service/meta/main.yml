@@ -7,3 +7,4 @@ galaxy_info:
   min_ansible_version: 2.1
   galaxy_tags: ['systemd', 'node', 'service']
 dependencies: []
+platform: ['debian', 'ubuntu']
