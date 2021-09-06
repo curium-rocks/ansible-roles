@@ -77,7 +77,7 @@
     mode: 0700
   become: true
 - name: Create .nvmrc
-  shell: '. /home/{{ service_account }}/.nvm/nvm.sh && node -version > {{ working_directory }}/.nvmrc'
+  shell: '. /home/{{ service_account }}/.nvm/nvm.sh && nvm use {{ node_version }} && node -version > {{ working_directory }}/.nvmrc'
   become: true
   args:
     creates: "{{ working_directory }}/.nvmrc"
