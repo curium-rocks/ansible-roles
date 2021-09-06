@@ -5,7 +5,7 @@
     name: '{{ service_account }}'
     state: present
     shell: /bin/bash
-  become: yes
+  become: true
 - name: 'Make service directory'
   file:
     path: '{{ working_directory }}'
@@ -13,35 +13,35 @@
     owner: '{{ service_account }}'
     group: '{{ service_account }}'
     mode: 0755
-  become: yes
+  become: true
 - name: 'Render Systemd Unit File'
   template:
     src: ./templates/node-systemd-service.service.j2
     dest: /etc/systemd/system/{{ service_name }}.service
-  become: yes
+  become: true
 - name: 'Render Service Run File'
   template:
     src: ./templates/run.sh.j2
     dest: '{{ working_directory }}/run.sh'
-  become: yes
+  become: true
 - name: 'Change Run File Permissions'
   file:
     owner: '{{ service_account }}'
     group: '{{ service_account }}'
     mode: 'u+rx'
     path: '{{ working_directory }}/run.sh'
-  become: yes
+  become: true
 - name: 'Install ACL package'
   package:
     name: acl
     state: present
-  become: yes
+  become: true
 - name: Install nvm
   shell: >
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
   args:
     creates: "/home/{{ service_account }}/.nvm/nvm.sh"
-  become: yes
+  become: true
   become_method: sudo
   become_user: '{{ service_account }}'
 - name: Install node
@@ -50,7 +50,7 @@
     creates: "/home/{{ service_account }}/.nvm/versions/node"
     chdir: "/home/{{ service_account }}"
     executable: /bin/bash
-  become: yes
+  become: true
   become_method: sudo
   become_user: '{{ service_account }}'
 - name: Copy Service Code
@@ -59,16 +59,17 @@
     dest: '{{ working_directory }}'
     owner: '{{ service_account }}'
     group: '{{ service_account }}'
-  become: yes
+  become: true
 - name: Create .nvmrc
   shell: '. /home/{{ service_account }}/.nvm/nvm.sh && node -version > {{ working_directory }}/.nvmrc'
-  become: yes
+  become: true
   args:
     creates: "{{ working_directory }}/.nvmrc"
 - name: 'Enable Systemd Service'
   systemd:
     state: "{{ 'restarted' if should_restart else 'started' }}"
-    enabled: yes
-    daemon_reload: yes
+    enabled: true
+    daemon_reload: true
     name: '{{ service_name }}'
-  become: yes
+  become: true
+  

@@ -10,4 +10,4 @@ service_name: 'node-systemd-service'
 node_version: 'lts/fermium'
 service_account: 'node-systemd-user'
 source_folder: './build/'
-should_restart: no
+should_restart: false
