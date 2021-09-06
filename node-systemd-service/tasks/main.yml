@@ -50,7 +50,7 @@
   become_method: sudo
   become_user: '{{ service_account }}'
 - name: Install NVM
-  shell: /tmp/install-nvm.sh
+  command: /tmp/install-nvm.sh
   args:
     creates: "/home/{{ service_account }}/.nvm/nvm.sh"
   become: true
