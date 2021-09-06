@@ -83,6 +83,8 @@
   become_user: '{{ service_account }}'
   args:
     creates: "{{ working_directory }}/.nvmrc"
+    chdir: "/home/{{ service_account }}"
+    executable: /bin/bash
 - name: 'Enable Systemd Service'
   systemd:
     state: "{{ 'restarted' if should_restart else 'started' }}"
