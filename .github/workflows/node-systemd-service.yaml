@@ -1,0 +1,15 @@
+name: Node-Systemd-Service Role CI
+on:
+  push:
+    branches: ["main"]
+    paths: ["node-systemd-service/**", ".github/workflows/node-systemd-service.yaml"]
+jobs:
+  validate-role:
+    runs-on: 'ubuntu-latest'
+    container: ghcr.io/curium-rocks/ansible-roles-qa:main
+    steps:
+    - run: 'echo test'
+  publish-role:
+    runs-on: 'ubuntu-latest'
+    steps:
+    - run: 'echo test'
