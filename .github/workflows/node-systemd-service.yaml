@@ -2,7 +2,7 @@ name: Node-Systemd-Service Role CI
 on:
   push:
     branches: ["main"]
-    paths: ["bryopsida/nexus/roles/node-systemd-service/**", ".github/workflows/node-systemd-service.yaml"]
+    paths: ["bryopsida/nexus/roles/node_systemd_service/**", ".github/workflows/node_systemd_service.yaml"]
 defaults:
   run:
     working-directory: bryopsida/nexus
@@ -12,9 +12,9 @@ jobs:
     container: ghcr.io/curium-rocks/ansible-roles-qa:main
     steps:
     - uses: actions/checkout@v2
-    - run: ansible-lint -p node-systemd-service/tests/test.yml node-systemd-service
+    - run: ansible-lint -p node_systemd_service/tests/test.yml node_systemd_service
       working-directory: bryopsida/nexus/roles
-    - run: ansible-playbook -i node-systemd-service/tests/ci node-systemd-service/tests/test.yml
+    - run: ansible-playbook -i node_systemd_service/tests/ci node_systemd_service/tests/test.yml
       working-directory: bryopsida/nexus/roles
   publish-role:
     needs: ['validate-role']
