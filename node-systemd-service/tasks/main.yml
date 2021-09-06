@@ -77,7 +77,7 @@
     mode: 0700
   become: true
 - name: Create .nvmrc
-  shell: '. /home/{{ service_account }}/.nvm/nvm.sh && node -version > /tmp/.nvmrc'
+  shell: '. /home/{{ service_account }}/.nvm/nvm.sh && node -v > /tmp/.nvmrc'
   become: true
   become_method: sudo
   become_user: '{{ service_account }}'
