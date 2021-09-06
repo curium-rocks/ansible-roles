@@ -3,6 +3,9 @@ on:
   push:
     branches: ["main"]
     paths: ["curium_rocks/nexus/roles/node-systemd-service/**", ".github/workflows/node-systemd-service.yaml"]
+defaults:
+  run:
+    working-directory: curium_rocks/nexus/roles
 jobs:
   validate-role:
     runs-on: 'ubuntu-latest'
