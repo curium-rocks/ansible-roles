@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: ansible-lint -p node-systemd-service/tests/test.yml node-systemd-service
-    - run: ansible-playbook -i node-systemd-service/tests/inventory node-systemd-service/tests/test.yml
+    - run: ansible-playbook -i node-systemd-service/tests/ci node-systemd-service/tests/test.yml
   publish-role:
     needs: ['validate-role']
     runs-on: 'ubuntu-latest'
