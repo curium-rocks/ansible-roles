@@ -2,6 +2,6 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - role: node-systemd-service
+    - role: node_systemd_service
       source_folder: ./test/
       should_restart: true

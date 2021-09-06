@@ -29,7 +29,7 @@ Example Playbook
 - hosts: localhost
   remote_user: root
   roles:
-    - role: node-systemd-service
+    - role: node_systemd_service
       sourceFolder: ./test/
       shouldRestart: yes
 ```
