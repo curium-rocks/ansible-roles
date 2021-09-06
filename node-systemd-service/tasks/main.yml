@@ -77,7 +77,7 @@
     mode: 0700
   become: true
 - name: Create .nvmrc
-  shell: '. /home/{{ service_account }}/.nvm/nvm.sh && nvm use {{ node_version }} && node -version > {{ working_directory }}/.nvmrc'
+  shell: '. /home/{{ service_account }}/.nvm/nvm.sh && node -version > /tmp/.nvmrc'
   become: true
   become_method: sudo
   become_user: '{{ service_account }}'
@@ -85,6 +85,11 @@
     creates: "{{ working_directory }}/.nvmrc"
     chdir: "/home/{{ service_account }}"
     executable: /bin/bash
+- name: Copy .nvmrc to service directory
+  command: "mv /tmp/.nvmrc {{ working_directory }}/.nvmrc"
+  become: true
+  args:
+    creates: "{{ working_directory }}/.nvmrc"
 - name: 'Enable Systemd Service'
   systemd:
     state: "{{ 'restarted' if should_restart else 'started' }}"
