@@ -2,6 +2,8 @@ galaxy_info:
   author: byropsida
   description: A nodejs systemd service template
   license: MIT
+  namespace: byropsida
+  role_name: node-systemd-service
   min_ansible_version: 2.1
   galaxy_tags: ['systemd', 'node', 'service']
 dependencies: []
