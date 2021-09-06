@@ -2,10 +2,10 @@ name: Node-Systemd-Service Role CI
 on:
   push:
     branches: ["main"]
-    paths: ["byropsida/nexus/roles/node-systemd-service/**", ".github/workflows/node-systemd-service.yaml"]
+    paths: ["bryopsida/nexus/roles/node-systemd-service/**", ".github/workflows/node-systemd-service.yaml"]
 defaults:
   run:
-    working-directory: byropsida/nexus
+    working-directory: bryopsida/nexus
 jobs:
   validate-role:
     runs-on: 'ubuntu-latest'
@@ -13,9 +13,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: ansible-lint -p node-systemd-service/tests/test.yml node-systemd-service
-      working-directory: byropsida/nexus/roles
+      working-directory: bryopsida/nexus/roles
     - run: ansible-playbook -i node-systemd-service/tests/ci node-systemd-service/tests/test.yml
-      working-directory: byropsida/nexus/roles
+      working-directory: bryopsida/nexus/roles
   publish-role:
     needs: ['validate-role']
     runs-on: 'ubuntu-latest'
