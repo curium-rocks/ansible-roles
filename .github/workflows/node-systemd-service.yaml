@@ -2,7 +2,7 @@ name: Node-Systemd-Service Role CI
 on:
   push:
     branches: ["main"]
-    paths: ["node-systemd-service/**", ".github/workflows/node-systemd-service.yaml"]
+    paths: ["curium_rocks/nexus/roles/node-systemd-service/**", ".github/workflows/node-systemd-service.yaml"]
 jobs:
   validate-role:
     runs-on: 'ubuntu-latest'
