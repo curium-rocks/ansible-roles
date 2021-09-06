@@ -3,16 +3,13 @@ on:
   push:
     branches: ["main"]
     paths: ["node-systemd-service/**", ".github/workflows/node-systemd-service.yaml"]
-defaults:
-  run:
-    working-directory: './node-systemd-service'
 jobs:
   validate-role:
     runs-on: 'ubuntu-latest'
     container: ghcr.io/curium-rocks/ansible-roles-qa:main
     steps:
     - uses: actions/checkout@v2
-    - run: ansible-lint -p test/test.yml .
+    - run: ansible-lint -p node-systemd-service/tests/test.yml node-systemd-service
   publish-role:
     needs: ['validate-role']
     runs-on: 'ubuntu-latest'
