@@ -2,34 +2,34 @@
 # tasks file for node-systemd-service
 - name: 'Make service account'
   user:
-    name: '{{ serviceAccount }}'
+    name: '{{ service_account }}'
     state: present
     shell: /bin/bash
   become: yes
 - name: 'Make service directory'
   file:
-    path: '{{ workingDirectory }}'
+    path: '{{ working_directory }}'
     state: directory
-    owner: '{{ serviceAccount }}'
-    group: '{{ serviceAccount }}'
+    owner: '{{ service_account }}'
+    group: '{{ service_account }}'
     mode: 0755
   become: yes
 - name: 'Render Systemd Unit File'
   template:
     src: ./templates/node-systemd-service.service.j2
-    dest: /etc/systemd/system/{{ serviceName }}.service
+    dest: /etc/systemd/system/{{ service_name }}.service
   become: yes
 - name: 'Render Service Run File'
   template:
     src: ./templates/run.sh.j2
-    dest: '{{ workingDirectory }}/run.sh'
+    dest: '{{ working_directory }}/run.sh'
   become: yes
 - name: 'Change Run File Permissions'
   file:
-    owner: '{{ serviceAccount }}'
-    group: '{{ serviceAccount }}'
+    owner: '{{ service_account }}'
+    group: '{{ service_account }}'
     mode: 'u+rx'
-    path: '{{ workingDirectory }}/run.sh'
+    path: '{{ working_directory }}/run.sh'
   become: yes
 - name: 'Install ACL package'
   package:
@@ -40,35 +40,35 @@
   shell: >
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
   args:
-    creates: "/home/{{ serviceAccount }}/.nvm/nvm.sh"
+    creates: "/home/{{ service_account }}/.nvm/nvm.sh"
   become: yes
   become_method: sudo
-  become_user: '{{ serviceAccount }}'
+  become_user: '{{ service_account }}'
 - name: Install node
-  shell: '. /home/{{ serviceAccount }}/.nvm/nvm.sh && nvm install {{ nodeVersion }}'
+  shell: '. /home/{{ service_account }}/.nvm/nvm.sh && nvm install {{ node_version }}'
   args:
-    creates: "/home/{{ serviceAccount }}/.nvm/versions/node"
-    chdir: "/home/{{ serviceAccount }}"
+    creates: "/home/{{ service_account }}/.nvm/versions/node"
+    chdir: "/home/{{ service_account }}"
     executable: /bin/bash
   become: yes
   become_method: sudo
-  become_user: '{{ serviceAccount }}'
+  become_user: '{{ service_account }}'
 - name: Copy Service Code
   copy:
-    src: '{{ sourceFolder }}'
-    dest: '{{ workingDirectory }}'
-    owner: '{{ serviceAccount }}'
-    group: '{{ serviceAccount }}'
+    src: '{{ source_folder }}'
+    dest: '{{ working_directory }}'
+    owner: '{{ service_account }}'
+    group: '{{ service_account }}'
   become: yes
 - name: Create .nvmrc
-  shell: '. /home/{{ serviceAccount }}/.nvm/nvm.sh && node -version > {{ workingDirectory }}/.nvmrc'
+  shell: '. /home/{{ service_account }}/.nvm/nvm.sh && node -version > {{ working_directory }}/.nvmrc'
   become: yes
   args:
-    creates: "{{ workingDirectory }}/.nvmrc"
+    creates: "{{ working_directory }}/.nvmrc"
 - name: 'Enable Systemd Service'
   systemd:
-    state: "{{ 'restarted' if shouldRestart else 'started' }}"
+    state: "{{ 'restarted' if should_restart else 'started' }}"
     enabled: yes
     daemon_reload: yes
-    name: '{{ serviceName }}'
+    name: '{{ service_name }}'
   become: yes

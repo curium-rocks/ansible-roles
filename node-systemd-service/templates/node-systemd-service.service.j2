@@ -4,11 +4,11 @@ After={{ after }}
 
 [Service]
 Type=simple
-WorkingDirectory={{ workingDirectory }}
-ExecStart={{ workingDirectory }}/run.sh
-Restart={{ restartPolicy }}
-User={{ serviceAccount }}
-Group={{ serviceAccount }}
+WorkingDirectory={{ working_directory }}
+ExecStart={{ working_directory }}/run.sh
+Restart={{ restart_policy }}
+User={{ service_account }}
+Group={{ service_account }}
 
 [Install]
 WantedBy={{ target }}

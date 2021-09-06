@@ -12,14 +12,14 @@ Role Variables
 | -------- | ---------- |
 | description | systemd unit description |
 | after | systemd target that the unit will start after |
-| workingDirectory | the working directory of the service |
-| startCommand | the command to start the service (this will be run with nvm-exec) |
+| working_directory | the working directory of the service |
+| start_command | the command to start the service (this will be run with nvm-exec) |
 | target | the target group that this unit is included in |
-| serviceName | the systemd service name |
-| nodeVersion | the node version this service requires (use nvm version names) |
-| serviceAccount | the service account this service will run under |
-| sourceFolder | the location of the service source code |
-| shouldRestart | if the service should be restarted |
+| service_name | the systemd service name |
+| node_version | the node version this service requires (use nvm version names) |
+| service_account | the service account this service will run under |
+| source_folder | the location of the service source code |
+| should_restart | if the service should be restarted |
 
 Example Playbook
 ----------------
