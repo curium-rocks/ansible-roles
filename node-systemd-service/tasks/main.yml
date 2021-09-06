@@ -39,7 +39,7 @@
     state: present
   become: true
 - name: Check if NVM is installed
-  stat: 
+  stat:
     path: "/home/{{ service_account }}/.nvm/nvm.sh"
   register: nvm
 - name: Download NVM Installer
