@@ -19,6 +19,9 @@ jobs:
   publish-role:
     needs: ['validate-role']
     runs-on: 'ubuntu-latest'
+    env:
+      GALAXY_API_TOKEN: ${{ secrets.GALAXY_API_TOKEN }}
     steps:
     - uses: actions/checkout@v2
     - run: ansible-galaxy collection build
+    - run: ansible-galaxy collection publish ./curium_rocks-nexus-0.1.0.tar.gz --token $GALAXY_API_TOKEN
