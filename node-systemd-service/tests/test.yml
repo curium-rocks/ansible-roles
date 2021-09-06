@@ -3,5 +3,5 @@
   remote_user: root
   roles:
     - role: node-systemd-service
-      source-folder: ./test/
+      source-folder: ./node-systemd-service/files/test/
       should-restart: true
