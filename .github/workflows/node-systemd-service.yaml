@@ -5,18 +5,18 @@ on:
     paths: ["curium_rocks/nexus/roles/node-systemd-service/**", ".github/workflows/node-systemd-service.yaml"]
 defaults:
   run:
-    working-directory: curium_rocks/nexus/roles
+    working-directory: curium_rocks/nexus
 jobs:
   validate-role:
     runs-on: 'ubuntu-latest'
     container: ghcr.io/curium-rocks/ansible-roles-qa:main
     steps:
     - uses: actions/checkout@v2
-    - run: ansible-lint -p node-systemd-service/tests/test.yml node-systemd-service
-    - run: ansible-playbook -i node-systemd-service/tests/ci node-systemd-service/tests/test.yml
+    - run: ansible-lint -p roles/node-systemd-service/tests/test.yml roles/node-systemd-service
+    - run: ansible-playbook -i roles/node-systemd-service/tests/ci roles/node-systemd-service/tests/test.yml
   publish-role:
     needs: ['validate-role']
     runs-on: 'ubuntu-latest'
     steps:
     - uses: actions/checkout@v2
-    - run: 'echo test'
+    - run: ansible-galaxy collection build
