@@ -1,0 +1,74 @@
+---
+# tasks file for node-systemd-service
+- name: 'Make service account'
+  user:
+    name: '{{ serviceAccount }}'
+    state: present
+    shell: /bin/bash
+  become: yes
+- name: 'Make service directory'
+  file:
+    path: '{{ workingDirectory }}'
+    state: directory
+    owner: '{{ serviceAccount }}'
+    group: '{{ serviceAccount }}'
+    mode: 0755
+  become: yes
+- name: 'Render Systemd Unit File'
+  template:
+    src: ./templates/node-systemd-service.service.j2
+    dest: /etc/systemd/system/{{ serviceName }}.service
+  become: yes
+- name: 'Render Service Run File'
+  template:
+    src: ./templates/run.sh.j2
+    dest: '{{ workingDirectory }}/run.sh'
+  become: yes
+- name: 'Change Run File Permissions'
+  file:
+    owner: '{{ serviceAccount }}'
+    group: '{{ serviceAccount }}'
+    mode: 'u+rx'
+    path: '{{ workingDirectory }}/run.sh'
+  become: yes
+- name: 'Install ACL package'
+  package:
+    name: acl
+    state: present
+  become: yes
+- name: Install nvm
+  shell: >
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+  args:
+    creates: "/home/{{ serviceAccount }}/.nvm/nvm.sh"
+  become: yes
+  become_method: sudo
+  become_user: '{{ serviceAccount }}'
+- name: Install node
+  shell: '. /home/{{ serviceAccount }}/.nvm/nvm.sh && nvm install {{ nodeVersion }}'
+  args:
+    creates: "/home/{{ serviceAccount }}/.nvm/versions/node"
+    chdir: "/home/{{ serviceAccount }}"
+    executable: /bin/bash
+  become: yes
+  become_method: sudo
+  become_user: '{{ serviceAccount }}'
+- name: Copy Service Code
+  copy:
+    src: '{{ sourceFolder }}'
+    dest: '{{ workingDirectory }}'
+    owner: '{{ serviceAccount }}'
+    group: '{{ serviceAccount }}'
+  become: yes
+- name: Create .nvmrc
+  shell: '. /home/{{ serviceAccount }}/.nvm/nvm.sh && node -version > {{ workingDirectory }}/.nvmrc'
+  become: yes
+  args:
+    creates: "{{ workingDirectory }}/.nvmrc"
+- name: 'Enable Systemd Service'
+  systemd:
+    state: "{{ 'restarted' if shouldRestart else 'started' }}"
+    enabled: yes
+    daemon_reload: yes
+    name: '{{ serviceName }}'
+  become: yes

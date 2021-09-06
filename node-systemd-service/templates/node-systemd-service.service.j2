@@ -1,0 +1,14 @@
+[Unit]
+Description={{ description }}
+After={{ after }}
+
+[Service]
+Type=simple
+WorkingDirectory={{ workingDirectory }}
+ExecStart={{ workingDirectory }}/run.sh
+Restart={{ restartPolicy }}
+User={{ serviceAccount }}
+Group={{ serviceAccount }}
+
+[Install]
+WantedBy={{ target }}

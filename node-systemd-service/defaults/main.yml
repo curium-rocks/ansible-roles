@@ -1,0 +1,13 @@
+---
+# defaults file for node-systemd-service
+description: 'A NodeJS systemd service'
+after: 'network.target'
+workingDirectory: '/opt/curium/systemd-node-service'
+startCommand: 'npm start'
+restartPolicy: 'on-failure'
+target: 'multi-user.target'
+serviceName: 'node-systemd-service'
+nodeVersion: 'lts/fermium'
+serviceAccount: 'node-systemd-user'
+sourceFolder: './build/'
+shouldRestart: no

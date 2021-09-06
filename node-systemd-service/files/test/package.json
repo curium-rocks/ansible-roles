@@ -1,0 +1,12 @@
+{
+  "name": "node-systemd-test-service",
+  "version": "1.0.0",
+  "description": "A test service for usage in testing node-systemd-service",
+  "main": "test_service.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node test_service.js"
+  },
+  "author": "",
+  "license": "MIT"
+}
