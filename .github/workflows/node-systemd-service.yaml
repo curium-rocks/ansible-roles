@@ -12,8 +12,10 @@ jobs:
     container: ghcr.io/curium-rocks/ansible-roles-qa:main
     steps:
     - uses: actions/checkout@v2
-    - run: ansible-lint -p roles/node-systemd-service/tests/test.yml roles/node-systemd-service
-    - run: ansible-playbook -i roles/node-systemd-service/tests/ci roles/node-systemd-service/tests/test.yml
+    - run: ansible-lint -p node-systemd-service/tests/test.yml node-systemd-service
+      working-directory: curium_rocks/nexus/roles
+    - run: ansible-playbook -i node-systemd-service/tests/ci node-systemd-service/tests/test.yml
+      working-directory: curium_rocks/nexus/roles
   publish-role:
     needs: ['validate-role']
     runs-on: 'ubuntu-latest'
