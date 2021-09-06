@@ -79,6 +79,8 @@
 - name: Create .nvmrc
   shell: '. /home/{{ service_account }}/.nvm/nvm.sh && nvm use {{ node_version }} && node -version > {{ working_directory }}/.nvmrc'
   become: true
+  become_method: sudo
+  become_user: '{{ service_account }}'
   args:
     creates: "{{ working_directory }}/.nvmrc"
 - name: 'Enable Systemd Service'
