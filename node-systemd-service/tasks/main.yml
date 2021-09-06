@@ -51,7 +51,7 @@
   become: true
   become_method: sudo
   become_user: '{{ service_account }}'
-  when: nvm.stat.exists == false
+  when: not nvm.stat.exists
 - name: Install NVM
   command: /tmp/install-nvm.sh
   args:
