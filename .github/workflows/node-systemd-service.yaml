@@ -26,7 +26,7 @@ jobs:
       working-directory: bryopsida/nexus/roles
   publish-role:
     needs: ['validate-role']
-    if: github.ref == 'ref/heads/main'
+    if: github.ref == 'refs/heads/main'
     runs-on: 'ubuntu-latest'
     env:
       GALAXY_API_TOKEN: ${{ secrets.GALAXY_API_TOKEN }}
