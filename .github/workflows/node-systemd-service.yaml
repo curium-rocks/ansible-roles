@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'bryopsida/nexus/**/*'
+      - '.github/workflows/node-systemd-service.yaml'
 defaults:
   run:
     working-directory: bryopsida/nexus
