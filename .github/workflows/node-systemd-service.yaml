@@ -1,6 +1,8 @@
 name: Node-Systemd-Service Role CI
 on:
-  workflow_dispatch: 
+  push:
+    paths:
+      - 'bryopsida/nexus/**/*'
 defaults:
   run:
     working-directory: bryopsida/nexus

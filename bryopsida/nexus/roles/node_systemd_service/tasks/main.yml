@@ -62,7 +62,7 @@
 - name: Install Node.JS
   shell: '. /home/{{ service_account }}/.nvm/nvm.sh && nvm install {{ node_version }}'
   args:
-    creates: "/home/{{ service_account }}/.nvm/versions/node"
+    creates: "/home/{{ service_account }}/.nvm/versions/node/{{ node_version }}"
     chdir: "/home/{{ service_account }}"
     executable: /bin/bash
   become: true
@@ -77,7 +77,10 @@
     mode: 0700
   become: true
 - name: Create .nvmrc
-  shell: '. /home/{{ service_account }}/.nvm/nvm.sh && node -v > /tmp/.nvmrc'
+  template:
+    src: ./templates/nvmrc.j2
+    dest: '{{ working_directory }}/.nvmrc'
+    mode: 0750
   become: true
   become_method: sudo
   become_user: '{{ service_account }}'
