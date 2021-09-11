@@ -33,4 +33,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: ansible-galaxy collection build
-    - run: ansible-galaxy collection publish ./bryopsida-nexus-0.1.0.tar.gz --token $GALAXY_API_TOKEN
+    - run: ansible-galaxy collection publish ./bryopsida-nexus-0.2.0.tar.gz --token $GALAXY_API_TOKEN
