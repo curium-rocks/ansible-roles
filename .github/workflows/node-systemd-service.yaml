@@ -17,7 +17,7 @@ jobs:
     - run: |
         ansible-playbook -i node_systemd_service/tests/ci node_systemd_service/tests/test.yml --extra-vars "node_version=v16.9.1"
         export OBSV_NVM_VER=$(cat /opt/curium/systemd-node-service/.nvmrc)
-        if [ "$OBSV_NVM_VER" != "v16.9.1"]; then 
+        if [ "$OBSV_NVM_VER" != "v16.9.1" ]; then 
           echo "Unexpected node version $OBSV_NVM_VER"
           exit -1
         fi
