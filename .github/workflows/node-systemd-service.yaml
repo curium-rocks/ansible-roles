@@ -12,7 +12,7 @@ jobs:
     runs-on: 'ubuntu-latest'
     container: ghcr.io/curium-rocks/ansible-roles-qa:main
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - run: ansible-lint -p node_systemd_service/tests/test.yml node_systemd_service
       working-directory: bryopsida/nexus/roles
     - run: ansible-playbook -i node_systemd_service/tests/ci node_systemd_service/tests/test.yml
@@ -32,6 +32,6 @@ jobs:
     env:
       GALAXY_API_TOKEN: ${{ secrets.GALAXY_API_TOKEN }}
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - run: ansible-galaxy collection build
     - run: ansible-galaxy collection publish ./bryopsida-nexus-0.2.0.tar.gz --token $GALAXY_API_TOKEN
